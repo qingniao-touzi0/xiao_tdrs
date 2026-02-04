@@ -26,10 +26,13 @@ const LOCAL_CONTRACTS = {
 
 // 根据 chainId 获取合约地址
 export const getContracts = (chainId?: number) => {
-  if (chainId === 56) {
-    return BSC_CONTRACTS;
+  // 如果明确是本地网络，才返回本地合约
+  if (chainId === 31337 || chainId === 1337) {
+    return LOCAL_CONTRACTS;
   }
-  return LOCAL_CONTRACTS;
+  // 其他情况（包括 undefined, 1, 56 等）默认返回 BSC 合约
+  // 这样即使用户连错网络，也能看到 BSC 上的数据
+  return BSC_CONTRACTS;
 };
 
 // 默认导出（用于兼容旧代码）
